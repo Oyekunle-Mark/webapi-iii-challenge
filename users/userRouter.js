@@ -5,7 +5,7 @@ const userValidator = require('../middlewares/userValidators');
 const router = express.Router();
 const Users = require('./userDb');
 
-router.post('/', (req, res) => {
+router.post('/', userValidator.validateUser, (req, res) => {
   const { name } = req.body;
 
   Users.insert({ name })
@@ -43,14 +43,19 @@ router.delete('/:id', userValidator.validateUserId, (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.put('/:id', userValidator.validateUserId, (req, res) => {
-  const { id } = req.params;
-  const { name } = req.body;
+router.put(
+  '/:id',
+  userValidator.validateUser,
+  userValidator.validateUserId,
+  (req, res) => {
+    const { id } = req.params;
+    const { name } = req.body;
 
-  Users.update(id, { name })
-    .then(user => res.status(200).json(`${user} user successfully updated.`))
-    .catch(err => res.status(500).json(err));
-});
+    Users.update(id, { name })
+      .then(user => res.status(200).json(`${user} user successfully updated.`))
+      .catch(err => res.status(500).json(err));
+  },
+);
 
 //custom middleware
 
