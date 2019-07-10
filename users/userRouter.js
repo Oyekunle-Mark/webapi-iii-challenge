@@ -1,5 +1,7 @@
 const express = require('express');
 
+const userValidator = require('../middlewares/userValidators');
+
 const router = express.Router();
 const Users = require('./userDb');
 
@@ -11,15 +13,13 @@ router.post('/', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.post('/:id/posts', (req, res) => {});
-
 router.get('/', (req, res) => {
   Users.get()
     .then(users => res.status(200).json(users))
     .catch(err => res.status(500).json(err));
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', userValidator.validateUserId, (req, res) => {
   const { id } = req.params;
 
   Users.getById(id)
@@ -27,7 +27,7 @@ router.get('/:id', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.get('/:id/posts', (req, res) => {
+router.get('/:id/posts', userValidator.validateUserId, (req, res) => {
   const { id } = req.params;
 
   Users.getUserPosts(id)
@@ -35,7 +35,7 @@ router.get('/:id/posts', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', userValidator.validateUserId, (req, res) => {
   const { id } = req.params;
 
   Users.remove(id)
@@ -43,7 +43,7 @@ router.delete('/:id', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', userValidator.validateUserId, (req, res) => {
   const { id } = req.params;
   const { name } = req.body;
 
@@ -53,10 +53,6 @@ router.put('/:id', (req, res) => {
 });
 
 //custom middleware
-
-function validateUserId(req, res, next) {}
-
-function validateUser(req, res, next) {}
 
 function validatePost(req, res, next) {}
 
