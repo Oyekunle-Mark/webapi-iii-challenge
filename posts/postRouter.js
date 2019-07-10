@@ -10,7 +10,11 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  
+  const { text, user_id } = req.body;
+
+  Posts.insert({ text, user_id })
+    .then(post => res.status(201).json(post))
+    .catch(err => res.status(500).json(err));
 });
 
 router.get('/:id', (req, res) => {});
