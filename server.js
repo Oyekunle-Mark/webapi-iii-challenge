@@ -16,4 +16,11 @@ server.get('/', (req, res) => {
 server.use('/api/users', userRouter);
 server.use('/api/posts', postRouter);
 
+server.use((req, res) =>
+  res.status(404).json({
+    status: 404,
+    message: 'Please check the URL and try again',
+  }),
+);
+
 module.exports = server;
