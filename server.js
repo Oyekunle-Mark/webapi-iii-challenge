@@ -1,4 +1,7 @@
 const express = require('express');
+const cors = require('cors');
+const compression = require('compression');
+const helmet = require('helmet');
 
 const userRouter = require('./users/userRouter');
 const postRouter = require('./posts/postRouter');
@@ -7,6 +10,9 @@ const logger = require('./middlewares/logger');
 const server = express();
 
 server.use(express.json());
+server.use(cors());
+server.use(compression());
+server.use(helmet());
 server.use(logger);
 
 server.get('/', (req, res) => {
