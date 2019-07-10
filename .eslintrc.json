@@ -22,6 +22,7 @@
     "no-console": 0,
     "camelcase": 0,
     "function-paren-newline": 0,
-    "implicit-arrow-linebreak": 0
+    "implicit-arrow-linebreak": 0,
+    "global-require": 0
   }
 }
