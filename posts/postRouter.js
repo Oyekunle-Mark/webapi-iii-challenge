@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.post('/', (req, res) => {
+router.post('/', postValidator.validatePost, (req, res) => {
   const { text, user_id } = req.body;
 
   Posts.insert({ text, user_id })
@@ -35,13 +35,18 @@ router.delete('/:id', postValidator.validatePostId, (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.put('/:id', postValidator.validatePostId, (req, res) => {
-  const { id } = req.params;
-  const { text } = req.body;
+router.put(
+  '/:id',
+  postValidator.validatePostId,
+  postValidator.validatePost,
+  (req, res) => {
+    const { id } = req.params;
+    const { text } = req.body;
 
-  Posts.update(id, { text })
-    .then(post => res.status(200).json(`${post} Record updated`))
-    .catch(err => res.status(500).json(err));
-});
+    Posts.update(id, { text })
+      .then(post => res.status(200).json(`${post} Record updated`))
+      .catch(err => res.status(500).json(err));
+  },
+);
 
 module.exports = router;
