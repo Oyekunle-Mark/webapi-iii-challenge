@@ -13,7 +13,13 @@ router.get('/', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.get('/:id', (req, res) => {});
+router.get('/:id', (req, res) => {
+  const { id } = req.params;
+
+  Users.getById(id)
+    .then(user => res.status(200).json(user))
+    .catch(err => res.status(500).json(err));
+});
 
 router.get('/:id/posts', (req, res) => {});
 
