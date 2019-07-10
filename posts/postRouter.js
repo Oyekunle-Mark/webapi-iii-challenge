@@ -1,5 +1,7 @@
 const express = require('express');
 
+const postValidator = require('../middlewares/postValidators');
+
 const router = express.Router();
 const Posts = require('./postDb');
 
@@ -17,7 +19,7 @@ router.post('/', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', postValidator.validatePostId, (req, res) => {
   const { id } = req.params;
 
   Posts.getById(id)
@@ -25,7 +27,7 @@ router.get('/:id', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', postValidator.validatePostId, (req, res) => {
   const { id } = req.params;
 
   Posts.remove(id)
@@ -33,7 +35,7 @@ router.delete('/:id', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', postValidator.validatePostId, (req, res) => {
   const { id } = req.params;
   const { text } = req.body;
 
@@ -41,9 +43,5 @@ router.put('/:id', (req, res) => {
     .then(post => res.status(200).json(`${post} Record updated`))
     .catch(err => res.status(500).json(err));
 });
-
-// custom middleware
-
-function validatePostId(req, res, next) {}
 
 module.exports = router;
