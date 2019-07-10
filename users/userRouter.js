@@ -57,8 +57,4 @@ router.put(
   },
 );
 
-//custom middleware
-
-function validatePost(req, res, next) {}
-
 module.exports = router;
