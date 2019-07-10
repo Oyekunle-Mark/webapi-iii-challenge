@@ -25,7 +25,13 @@ router.get('/:id', (req, res) => {
     .catch(err => res.status(500).json(err));
 });
 
-router.delete('/:id', (req, res) => {});
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+
+  Posts.remove(id)
+    .then(posts => res.status(200).json(`${posts} Record deleted`))
+    .catch(err => res.status(500).json(err));
+});
 
 router.put('/:id', (req, res) => {});
 
