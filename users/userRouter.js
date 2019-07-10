@@ -29,7 +29,13 @@ router.get('/:id', (req, res) => {
 
 router.get('/:id/posts', (req, res) => {});
 
-router.delete('/:id', (req, res) => {});
+router.delete('/:id', (req, res) => {
+  const { id } = req.params;
+
+  Users.remove(id)
+    .then(user => res.status(200).json(`${user} user deleted.`))
+    .catch(err => res.status(500).json(err));
+});
 
 router.put('/:id', (req, res) => {});
 
