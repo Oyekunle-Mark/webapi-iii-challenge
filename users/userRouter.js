@@ -3,7 +3,13 @@ const express = require('express');
 const router = express.Router();
 const Users = require('./userDb');
 
-router.post('/', (req, res) => {});
+router.post('/', (req, res) => {
+  const { name } = req.body;
+
+  Users.insert({ name })
+    .then(user => res.status(201).json(user))
+    .catch(err => res.status(500).json(err));
+});
 
 router.post('/:id/posts', (req, res) => {});
 
