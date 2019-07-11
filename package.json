@@ -4,8 +4,8 @@
   "description": "Web API Blog Project",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "server": "nodemon cluster.js"
+    "start": "node cluster.js",
+    "server": "pm2 start cluster.js"
   },
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
     "eslint-config-airbnb-base": "^13.2.0",
     "eslint-plugin-import": "^2.18.0",
     "knex-cleaner": "^1.1.4",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "pm2": "^3.5.1"
   }
 }
