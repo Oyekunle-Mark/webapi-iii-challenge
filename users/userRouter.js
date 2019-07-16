@@ -1,47 +1,20 @@
-const express = 'express';
+const express = require('express');
+
+const handlers = require('./handlers');
+const userValidator = require('../middlewares/userValidators');
 
 const router = express.Router();
 
-router.post('/', (req, res) => {
-
-});
-
-router.post('/:id/posts', (req, res) => {
-
-});
-
-router.get('/', (req, res) => {
-
-});
-
-router.get('/:id', (req, res) => {
-
-});
-
-router.get('/:id/posts', (req, res) => {
-
-});
-
-router.delete('/:id', (req, res) => {
-
-});
-
-router.put('/:id', (req, res) => {
-
-});
-
-//custom middleware
-
-function validateUserId(req, res, next) {
-
-};
-
-function validateUser(req, res, next) {
-
-};
-
-function validatePost(req, res, next) {
-
-};
+router.post('/', userValidator.validateUser, handlers.createUser);
+router.get('/', handlers.getUsers);
+router.get('/:id', userValidator.validateUserId, handlers.getUserById);
+router.get('/:id/posts', userValidator.validateUserId, handlers.getUserPost);
+router.delete('/:id', userValidator.validateUserId, handlers.deleteUser);
+router.put(
+  '/:id',
+  userValidator.validateUser,
+  userValidator.validateUserId,
+  handlers.editUser,
+);
 
 module.exports = router;
